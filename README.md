@@ -1,5 +1,5 @@
 # KUbeDescrambler
-INFO: C++ algorithm for solving a rubiks cube. Takes input via the format shown bellow where each character represents a color: 
+INFO: C++ algorithm for solving a rubiks cube. Takes input via the format shown bellow where each character represents a color(view raw to see correct format): 
    www      
    www      
    www      
