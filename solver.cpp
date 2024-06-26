@@ -310,6 +310,44 @@ string solver::start(){
             step4 = true;
         }
     }
+
+    while(step4){//make cross on U
+        if((rubix.getCube(3,1) == rubix.getCube(4,1)) && (rubix.getCube(4,2) == rubix.getCube(4,1))){
+            if((rubix.getCube(4,0) == rubix.getCube(4,1)) && (rubix.getCube(5,1) == rubix.getCube(4,1))){
+                step4 = false;
+                step5 = true;
+                cout << "Step4 Complete: \n";
+                rubix.print();
+            }
+            else{
+                rubix.rotate('u', 1);
+                rubix.furuAlg();
+            }
+        }
+        else if((rubix.getCube(4,0) == rubix.getCube(4,1)) && (rubix.getCube(3,1) == rubix.getCube(4,1))){
+            rubix.furuAlg();
+        }
+        else if((rubix.getCube(4,0) == rubix.getCube(4,1)) && (rubix.getCube(5,1) == rubix.getCube(4,1))){
+            rubix.rotate('u', -1);
+            rubix.furuAlg();
+        }
+        else if((rubix.getCube(4,2) == rubix.getCube(4,1)) && (rubix.getCube(5,1) == rubix.getCube(4,1))){
+            rubix.rotate('u', 2);
+            rubix.furuAlg();
+        }
+        else if((rubix.getCube(4,0) != rubix.getCube(4,1)) && (rubix.getCube(3,1) != rubix.getCube(4,1)) && (rubix.getCube(4,2) != rubix.getCube(4,1)) && (rubix.getCube(5,1) != rubix.getCube(4,1))){
+            rubix.furuAlg();
+
+        }
+        else if((rubix.getCube(4,0) == rubix.getCube(4,1)) && (rubix.getCube(4,2) == rubix.getCube(4,1))){
+            rubix.furuAlg();
+        }
+        else if((rubix.getCube(3,1) == rubix.getCube(4,1)) && (rubix.getCube(5,1) == rubix.getCube(4,1))){
+            rubix.rotate('u', 1);
+            rubix.furuAlg();
+        }
+    }
+    
 }
 
 void solver::daisy(int x, int y){
@@ -933,4 +971,77 @@ bool solver::replaceD(){
         }
     }
     return rep; 
+}
+
+void solver::cross(){
+    for(int i = 0; i < 4; i++){
+        if(rubix.getCube(4,2) == rubix.getCube(4,7)){
+            if(rubix.getCube(4,3) == rubix.getCube(4,4)){
+                rubix.rotate('f',2);
+            }
+            else if(rubix.getCube(4,3) == rubix.getCube(1,4)){
+                rubix.rotate('u',1);
+                rubix.rotate('l',2);
+            }
+            else if(rubix.getCube(4,3) == rubix.getCube(10,4)){
+                rubix.rotate('u',2);
+                rubix.rotate('b',2);
+            }
+            else if(rubix.getCube(4,3) == rubix.getCube(7,4)){
+                rubix.rotate('u',-1);
+                rubix.rotate('r',2);
+            }
+        }
+        else if(rubix.getCube(5,1) == rubix.getCube(4,7)){
+            if(rubix.getCube(7,3) == rubix.getCube(7,4)){
+                rubix.rotate('r',2);
+            }
+            else if(rubix.getCube(7,3) == rubix.getCube(4,4)){
+                rubix.rotate('u',1);
+                rubix.rotate('f',2);
+            }
+            else if(rubix.getCube(7,3) == rubix.getCube(1,4)){
+                rubix.rotate('u',2);
+                rubix.rotate('l',2);
+            }
+            else if(rubix.getCube(7,3) == rubix.getCube(10,4)){
+                rubix.rotate('u',-1);
+                rubix.rotate('b',2);
+            }
+        }
+        else if(rubix.getCube(4,0) == rubix.getCube(4,7)){
+            if(rubix.getCube(10,3) == rubix.getCube(10,4)){
+                rubix.rotate('b',2);
+            }
+            else if(rubix.getCube(10,3) == rubix.getCube(7,4)){
+                rubix.rotate('u',1);
+                rubix.rotate('r',2);
+            }
+            else if(rubix.getCube(10,3) == rubix.getCube(4,4)){
+                rubix.rotate('u',2);
+                rubix.rotate('f',2);
+            }
+            else if(rubix.getCube(10,3) == rubix.getCube(1,4)){
+                rubix.rotate('u',-1);
+                rubix.rotate('l',2);
+            }
+        }
+        else if(rubix.getCube(3,1) == rubix.getCube(4,7)){
+            if(rubix.getCube(1,3) == rubix.getCube(1,4)){
+                rubix.rotate('l',2);
+            }
+            else if(rubix.getCube(1,3) == rubix.getCube(10,4)){
+                rubix.rotate('u',1);
+                rubix.rotate('b',2);
+            }
+            else if(rubix.getCube(1,3) == rubix.getCube(7,4)){
+                rubix.rotate('u',2);
+                rubix.rotate('r',2);
+            }
+            else if(rubix.getCube(1,3) == rubix.getCube(4,4)){
+                rubix.rotate('u',-1);
+                rubix.rotate('f',2);
+            }
+        }
+    }
 }
