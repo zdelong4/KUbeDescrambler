@@ -347,6 +347,68 @@ string solver::start(){
             rubix.furuAlg();
         }
     }
+
+    while(step5){// solve U face
+        int numC = 0;
+        int xC = -1;
+        int yC = -1;
+        if(rubix.getCube(3,0) == rubix.getCube(4,1)){
+            numC++;
+            xC = 3;
+            yC = 0;
+        }
+        if(rubix.getCube(3,2) == rubix.getCube(4,1)){
+            numC++;
+            xC = 3;
+            yC = 2;
+        }
+        if(rubix.getCube(5,0) == rubix.getCube(4,1)){
+            numC++;
+            xC = 5;
+            yC = 0;
+        }
+        if(rubix.getCube(5,2) == rubix.getCube(4,1)){
+            numC++;
+            xC = 5;
+            yC = 2;
+        }
+        if((numC == 0)||(numC == 2)){
+            if(rubix.getCube(5,3) == rubix.getCube(4,1)){
+                rubix.rotate('u', 1);
+            }
+            else if(rubix.getCube(8,3) == rubix.getCube(4,1)){
+                rubix.rotate('u', 2);
+            }
+            else if(rubix.getCube(11,3) == rubix.getCube(4,1)){
+                rubix.rotate('u', -1);
+            }
+            rubix.ruruAlg();
+        }
+        else if(numC == 1){
+            if(xC == 3){
+                if(yC == 0){
+                    rubix.rotate('u', -1);
+                }
+                rubix.ruruAlg();
+            }
+            else if(xC == 5){
+                if(yC == 0){
+                    rubix.rotate('u', 2);
+                }
+                else if(yC == 2){
+                    rubix.rotate('u', 1);
+                }
+                rubix.ruruAlg();
+            }
+        }
+        else if(numC == 4){
+            cout << "Step5 Complete: \n";
+            rubix.print();
+            step5 = false;
+            step6 = true;
+        }
+        numC = 0;
+    }
     
 }
 
