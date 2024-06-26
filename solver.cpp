@@ -239,7 +239,79 @@ string solver::start(){
     }
     cout << "Step2 Complete: \n";
     rubix.print();
+
+    step3 = true;
+    while(step3){
+        //u face edges with no top color
+        if((rubix.getCube(3,1) != rubix.getCube(4,1)) && (rubix.getCube(1,3) != rubix.getCube(4,1))){
+                edgeSwap(1, rubix.getCube(3,1));
+        }
+        else if((rubix.getCube(4,0) != rubix.getCube(4,1)) && (rubix.getCube(10,3) != rubix.getCube(4,1))){
+                edgeSwap(10, rubix.getCube(4,0));
+        }
+        else if((rubix.getCube(5,1) != rubix.getCube(4,1)) && (rubix.getCube(7,3) != rubix.getCube(4,1))){
+                edgeSwap(7, rubix.getCube(5,1));
+        }
+        else if((rubix.getCube(4,2) != rubix.getCube(4,1)) && (rubix.getCube(4,3) != rubix.getCube(4,1))){
+                edgeSwap(4, rubix.getCube(4,2));
+        }
+        else{
+            for(int i = 0; i < 12; i++){
+                if(i < 3){
+                    if(rubix.getCube(i,4) != rubix.getCube(1,4)){
+                        if(i == 0){
+                            rubix.leftTrig(1);
+                        }
+                        else{
+                            rubix.rightTrig(1);
+                        }
+                        i = 12;
+                    }
+                }
+                else if(i < 6){
+                    if(rubix.getCube(i,4) != rubix.getCube(4,4)){
+                        if(i == 3){
+                            rubix.leftTrig(4);
+                        }
+                        else{
+                            rubix.rightTrig(4);
+                        }
+                        i = 12;
+                    }
+                }
+                else if(i < 9){
+                     if(rubix.getCube(i,4) != rubix.getCube(7,4)){
+                        if(i == 6){
+                            rubix.leftTrig(7);
+                        }
+                        else{
+                            rubix.rightTrig(7);
+                        }
+                        i = 12;
+                    }
+                }
+                else{
+                    if(rubix.getCube(i,4) != rubix.getCube(10,4)){
+                        if(i == 9){
+                            rubix.leftTrig(10);
+                        }
+                        else{
+                            rubix.rightTrig(10);
+                        }
+                        i = 12;
+                    }
+                }
+            }
+        }
+        if(replaceD() == false){
+            cout << "Step3 complete\n";
+            rubix.print();
+            step3 = false;
+            step4 = true;
+        }
+    }
 }
+
 void solver::daisy(int x, int y){
     if(y == 3){//an edge peice cannot be two of the same color
         if(x == 1){
@@ -662,4 +734,203 @@ void solver::trigger(int x, int y){
     else{
         rubix.rightTrig(refCoord);
     }
+}
+
+void solver::topShift(int x, int y){
+    if((x == 3) && (y == 0)){
+        if(rubix.getCube(3,8) != base){
+            rubix.leftTrig(1);
+            rubix.leftTrig(1);
+        }
+        else if(rubix.getCube(3,6) != base){
+            rubix.rotate('u', -1);
+            rubix.leftTrig(4);
+            rubix.leftTrig(4);
+        }
+        else if(rubix.getCube(5,8) != base){
+            rubix.rotate('u', 1);
+            rubix.rightTrig(7);
+            rubix.rightTrig(7);
+        }
+        else if(rubix.getCube(5,6) != base){
+            rubix.rotate('u', 2);
+            rubix.rightTrig(4);
+            rubix.rightTrig(4);
+        }
+    }
+    else if((x == 3) && (y == 2)){
+        if(rubix.getCube(3,6) != base){
+            rubix.leftTrig(4);
+            rubix.leftTrig(4);
+        }
+        else if(rubix.getCube(3,8) != base){
+            rubix.rotate('u', 1);
+            rubix.leftTrig(1);
+            rubix.leftTrig(1);
+        }
+        else if(rubix.getCube(5,8) != base){
+            rubix.rotate('u', 2);
+            rubix.rightTrig(7);
+            rubix.rightTrig(7);
+        }
+        else if(rubix.getCube(5,6) != base){
+            rubix.rotate('u', -1);
+            rubix.rightTrig(4);
+            rubix.rightTrig(4);
+        }
+    }
+    else if((x == 5) && (y == 0)){
+        if(rubix.getCube(5,8) != base){
+            rubix.rightTrig(7);
+            rubix.rightTrig(7);
+        }
+        else if(rubix.getCube(5,6) != base){
+            rubix.rotate('u', 1);
+            rubix.rightTrig(4);
+            rubix.rightTrig(4);
+        }
+        else if(rubix.getCube(3,6) != base){
+            rubix.rotate('u', 2);
+            rubix.leftTrig(4);
+            rubix.leftTrig(4);
+        }
+        else if(rubix.getCube(3,8) != base){
+            rubix.rotate('u', -1);
+            rubix.leftTrig(1);
+            rubix.leftTrig(1);
+        }
+    }
+    else if((x == 5) && (y == 2)){
+        if(rubix.getCube(5,6) != base){
+            rubix.rightTrig(4);
+            rubix.rightTrig(4);
+        }
+        else if(rubix.getCube(5,8) != base){
+            rubix.rotate('u', -1);
+            rubix.rightTrig(7);
+            rubix.rightTrig(7);
+        }
+        else if(rubix.getCube(3,6) != base){
+            rubix.rotate('u', 1);
+            rubix.leftTrig(4);
+            rubix.leftTrig(4);
+        }
+        else if(rubix.getCube(3,8) != base){
+            rubix.rotate('u', 2);
+            rubix.leftTrig(1);
+            rubix.leftTrig(1);
+        }
+    }
+}
+
+void solver::edgeSwap(int x, char up){
+    x = findFace(x);
+    if(x == 1){
+        if(up == rubix.getCube(4,4)){
+            rubix.rotate('u', 1);
+            rubix.rightTrig(1);
+        }
+        else{
+            rubix.rotate('u', -1);
+            rubix.leftTrig(1);
+        }
+    }
+    else if(x == 4){
+        if(up == rubix.getCube(7,4)){
+            rubix.rotate('u', 1);
+            rubix.rightTrig(4);
+        }
+        else{
+            rubix.rotate('u', -1);
+            rubix.leftTrig(4);
+        }
+    }
+    else if(x == 7){
+        if(up == rubix.getCube(10,4)){
+            rubix.rotate('u', 1);
+            rubix.rightTrig(7);
+        }
+        else{
+            rubix.rotate('u', -1);
+            rubix.leftTrig(7);
+        }
+    }
+    else if(x == 10){
+        if(up == rubix.getCube(1,4)){
+            rubix.rotate('u', 1);
+            rubix.rightTrig(10);
+        }
+        else{
+            rubix.rotate('u', -1);
+            rubix.leftTrig(10);
+        }
+    }
+}
+
+int solver::findFace(int x){
+    int numRot = 0;
+    char target = rubix.getCube(x,3);
+    if(x == 0){
+        x = 1;
+    }
+    if(target == rubix.getCube(1,4)){
+        if(x == 4){
+            rubix.rotate('u', 1);
+        }
+        else if(x == 7){
+            rubix.rotate('u', 2);
+        }
+        else if(x == 10){
+            rubix.rotate('u', -1);
+        }
+        x = 1;
+    }
+    else if(target == rubix.getCube(4,4)){
+       if(x == 1){
+            rubix.rotate('u', -1);
+        }
+        else if(x == 7){
+            rubix.rotate('u', 1);
+        }
+        else if(x == 10){
+            rubix.rotate('u', 2);
+        }
+        x = 4;
+    }
+    else if(target == rubix.getCube(7,4)){
+        if(x == 1){
+            rubix.rotate('u', 2);
+        }
+        else if(x == 4){
+            rubix.rotate('u', -1);
+        }
+        else if(x == 10){
+            rubix.rotate('u', 1);
+        }
+        x = 7;
+    }
+    else if(target == rubix.getCube(10,4)){
+        if(x == 1){
+            rubix.rotate('u', 1);
+        }
+        else if(x == 4){
+            rubix.rotate('u', 2);
+        }
+        else if(x == 7){
+            rubix.rotate('u', -1);
+        }
+        x = 10;
+    }
+    return x;
+}
+
+bool solver::replaceD(){
+    bool rep = false;
+    for(int i = 0; i < 12; i++){
+        if(rubix.getCube(i,3) == base){
+            trigger(i,3);
+            rep = true;
+        }
+    }
+    return rep; 
 }
