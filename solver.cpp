@@ -409,6 +409,175 @@ string solver::start(){
         }
         numC = 0;
     }
+
+    while(step6){//solve 3rd layer corners
+        if(rubix.getCube(0,3) == rubix.getCube(2,3)){
+            if(rubix.getCube(3,3) == rubix.getCube(5,3)){
+                if(rubix.getCube(6,3) == rubix.getCube(8,3)){
+                    if(rubix.getCube(9,3) == rubix.getCube(11,3)){
+                        cout << "Step6 complete: \n";
+                        findFace(0);
+                        rubix.print();
+                        step6 = false;
+                        step7 = true;
+                    }
+                }
+            }
+            else{
+                rubix.luruAlg(1);
+            }
+        }
+        else if(rubix.getCube(3,3) == rubix.getCube(5,3)){
+            rubix.luruAlg(4);
+        }
+        else if(rubix.getCube(6,3) == rubix.getCube(8,3)){
+            rubix.luruAlg(7);
+        }
+        else if(rubix.getCube(9,3) == rubix.getCube(11,3)){
+            rubix.luruAlg(10);
+        }
+        else{
+            rubix.luruAlg(1);
+        }
+        //rubix.print();
+    }
+    x = 0;
+    while(step7){
+        bool solved = true;
+        solved = true;
+        for(int i  = 0; i < 12; i++){
+            for(int j = 0; j < 9; j++){
+                if((2 < i) && (i < 6) && (j < 3)){
+                    if(rubix.getCube(i,j) != rubix.getCube(4,1)){
+                        solved = false;
+                    }
+                }
+                else if((i < 3) && (2 < j)&& (j < 6)){
+                    if(rubix.getCube(i,j) != rubix.getCube(1,4)){
+                        solved = false;
+                    }
+                }
+                else if((2 < i) && (i < 6) && (2 < j) && (j < 6)){
+                    if(rubix.getCube(i,j) != rubix.getCube(4,4)){
+                        solved = false;
+                    }
+                }
+                else if((2 < i) && (i < 6) && (j > 5)){
+                    if(rubix.getCube(i,j) != rubix.getCube(4,7)){
+                        solved = false;
+                    }
+                }
+                else if((5 < i) && (i < 9) && (2 < j) && (j < 6)){
+                    if(rubix.getCube(i,j) != rubix.getCube(7,4)){
+                        solved = false;
+                    }
+                }
+                else if((i > 8) && (2 < j) && (j < 6)){
+                    if(rubix.getCube(i,j) != rubix.getCube(10,4)){
+                        solved = false;
+                    }
+                }
+            }
+        }
+        int ref = -1;
+        if(!solved){
+            for(int i = 0; i < 3; i ++){
+                for(int j = 3; j < 6; j++){
+                    if(rubix.getCube(i, j) != rubix.getCube(1,4)){
+                        i = 3;
+                        j = 6;
+                        ref = -1;
+                    }
+                    else {
+                        ref = 1;
+                    }
+                }
+            }
+            if(ref == -1){
+                for(int i = 3; i < 6; i ++){
+                    for(int j = 3; j < 6; j++){
+                        if(rubix.getCube(i, j) != rubix.getCube(4,4)){
+                            i = 6;
+                            j = 6;
+                            ref = -1;
+                        }
+                        else {
+                            ref = 4;
+                        }
+                    }
+                }
+            }
+            if(ref == -1){
+                for(int i = 6; i < 9; i ++){
+                    for(int j = 3; j < 6; j++){
+                        if(rubix.getCube(i, j) != rubix.getCube(7,4)){
+                            i = 9;
+                            j = 6;
+                            ref = -1;
+                        }
+                        else {
+                            ref = 7;
+                        }
+                    }
+                }
+            }
+            if(ref == -1){
+                for(int i = 9; i < 12; i ++){
+                    for(int j = 3; j < 6; j++){
+                        if(rubix.getCube(i, j) != rubix.getCube(10,4)){
+                            i = 12;
+                            j = 6;
+                            ref = -1;
+                        }
+                        else {
+                            ref = 10;
+                        }
+                    }
+                }
+            }
+            if(ref == 1){
+                if(rubix.getCube(4,3) == rubix.getCube(7,4)){
+                    rubix.ffuAlg(ref,'r');
+                }
+                else{
+                    rubix.ffuAlg(ref, 'f');
+                }
+            }
+            else if(ref == 4){
+                if(rubix.getCube(7,3) == rubix.getCube(10,4)){
+                    rubix.ffuAlg(ref,'r');
+                }
+                else{
+                    rubix.ffuAlg(ref, 'f');
+                }
+            }
+            else if(ref == 7){
+                if(rubix.getCube(10,3) == rubix.getCube(1,4)){
+                    rubix.ffuAlg(ref,'r');
+                }
+                else{
+                    rubix.ffuAlg(ref, 'f');
+                }
+            }
+            else if(ref == 10){
+                if(rubix.getCube(1,3) == rubix.getCube(4,4)){
+                    rubix.ffuAlg(ref,'r');
+                }
+                else{
+                    rubix.ffuAlg(ref, 'f');
+                }
+            }
+            else{
+                rubix.ffuAlg(10,'f');
+            }
+        }
+        else{
+            cout << "Solved: \n";
+            step7 = false;
+        }
+    }  
+    rubix.print();
+    return rubix.getMoves();
     
 }
 
