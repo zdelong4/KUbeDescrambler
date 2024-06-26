@@ -6,6 +6,9 @@ KUbe
 #include "cube.hpp"
 #include <iostream>
 #include <string>
+#include <stdlib.h> 
+#include <time.h> 
+#include <fstream>
 using namespace std;
 
 
@@ -51,32 +54,20 @@ void Cube::buildTest(){
 
 }
 
-//@brief: used for generating a cube
+//@brief: used for generating a cube from input file
 //@param: none
 //@return: none
 void Cube::buildCube(){
-    //create test cases
-    char cube[11][8]; 
-    for(int i = 0; i < 3; i++){
-        for(int j = 0; j < 3; j++){
-             //fill every position in the fae arrays with r, b, w, y, o, g
-            // do for each face
+    fstream infile;
+    infile.open("manual.txt");
+    string line;
+    for(int i = 0; i < 9; i++){
+        getline(infile,line);
+        for(int j = 0; j < 12; j++){
+            cube[j][i] = line.at(j);
         }
     }
-
-    for(int i = 0; i < 12; i++){
-        for(int j = 0; j < 9; j++){
-            if((i < 3) && (j < 3)){
-                cube[i][j] = ' ';
-            }
-            else if((i < 3) && (j > 5)){
-                cube[i][j] = ' ';
-            }
-            else if((i > 5) && (j < 3)){
-                cube[i][j] = ' ';
-            }
-        }
-    }
+    infile.close();
 }
 
 /*
@@ -118,21 +109,6 @@ bool Cube::checkBuild(){
         if(count > 1)
             cout << "checkBuild error: invalid center on color char " + c;
         count = 0;
-    }
-    for(int i = 0; i < 12; i++){
-        for(int j = 0; j < 9; j++){
-            if((i < 3)&&(j < 3)){
-                if(cube[i][j] != ' '){
-                    cout<< "checkBuild error: color out of bounds";
-                }
-            }
-            if((i < 3)&&(j < 3)){
-                if(cube[i][j] != ' '){
-                    cout<< "checkBuild error: color out of bounds";
-                }
-            }
-
-        }
     }
 }
 
