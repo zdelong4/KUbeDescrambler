@@ -1,34 +1,32 @@
+/*
+Zach DeLong
+EECS542
+KUbe
+*/
 #ifndef CUBE_HPP
 #define CUBE_HPP
 #include <iostream>
+#include <string>
+#include <stdlib.h> 
+#include <time.h> 
+using namespace std;
 
-/// Creates 12 by 9 array of character representing a 3 by 3 rubiks cube
-/// and defines face rotations
 
 class Cube{
     private:
-       char cube[12][9];
-
+        char cube[12][9];
+        string moves;
+        string shuffleMoves;
     public:
         Cube();
         ~Cube();
-    
-        //builds cube, use for test cases
-        void buildCube();
+        void buildCube();//builds cube, use for test cases
         bool checkBuild();
-        
         char* getCube();
         char* getFace(char face);
-
         //cube and faces
-        char f_face[2][2];
-        char b_face[2][2];
-        char u_face[2][2];
-        char r_face[2][2];
-        char l_face[2][2];
-        char d_face[2][2];
         char refFace;
-
+        
         //moves
         void rotate(char face, int num);
         void rotF(int num);
@@ -37,13 +35,20 @@ class Cube{
         void rotR(int num);
         void rotL(int num);
         void rotD(int num);
-        void rightTrig();
-        void leftTrig();
+        void rightTrig(int ref);
+        void leftTrig(int ref);
         void furuAlg();
         void ruruAlg();
-        void luruAlg();
+        void luruAlg(int ref);
+        void ffuAlg(int ref, char dir);
         void print();
         void buildTest();
+        void updateFaces();
+        string getMoves();
+        string getShuffle();
+        char getCube(int x, int y);
+        void shuffle(int c);
+        
 
     
 };
